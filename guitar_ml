@@ -1,0 +1,5 @@
+import numpy as np
+from random import random
+
+x = np.array([[random() / 2 for _ in range(2)] for _ in range(2000)])
+y = np.array([[i[0] + i[1]] for i in x])

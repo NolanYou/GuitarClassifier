@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="cc6dd5d0-9348-435d-b3a9-abdf4ff0545b" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ProjectId" id="1wXhAY3yNQMdR1WNgBwospUqY5n" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cc6dd5d0-9348-435d-b3a9-abdf4ff0545b" name="Default Changelist" comment="" />
+      <created>1628610697765</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1628610697765</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="736" y="376" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1629061154786">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="736" y="376" key="#com.intellij.execution.impl.EditConfigurationsDialog/3840.1080.1920.1080/0.0.2560.1440@0.0.2560.1440" timestamp="1629061154786" />
+    <state x="1042" y="524" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1629061533034">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="1042" y="524" key="#com.intellij.fileTypes.FileTypeChooser/3840.1080.1920.1080/0.0.2560.1440@0.0.2560.1440" timestamp="1629061533034" />
+    <state x="1061" y="476" key="FileChooserDialogImpl" timestamp="1629064948066">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="1061" y="476" key="FileChooserDialogImpl/3840.1080.1920.1080/0.0.2560.1440@0.0.2560.1440" timestamp="1629064948066" />
+    <state x="782" y="363" key="SettingsEditor" timestamp="1629065056612">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="782" y="363" key="SettingsEditor/3840.1080.1920.1080/0.0.2560.1440@0.0.2560.1440" timestamp="1629065056612" />
+    <state x="977" y="545" key="com.intellij.ide.util.TipDialog" timestamp="1630983283758">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="977" y="545" key="com.intellij.ide.util.TipDialog/3840.1080.1920.1080/0.0.2560.1440@0.0.2560.1440" timestamp="1630983283758" />
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup" timestamp="1629061174064">
+      <screen x="0" y="0" width="2560" height="1440" />
+    </state>
+    <state x="943" y="325" width="672" height="678" key="search.everywhere.popup/3840.1080.1920.1080/0.0.2560.1440@0.0.2560.1440" timestamp="1629061174064" />
+  </component>
+</project>
