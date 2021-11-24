@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
-from random import random
+
+import random
 
 import keras
 from keras.datasets import mnist
@@ -11,13 +12,22 @@ import tensorflow as tf
 import numpy as np
 import matplotlib as plt
 
-batch_size = 128
+import util
+
+BATCH_SIZE = 128
 num_classes = 3
 epochs = 15
 
+#sampling rate of the wav file
 SAMPLING_RATE = 16000
+#path to the dataset
 DATASET_AUDIO_PATH = ""
-SHUFFLE_SEED = random.randint(0,100)
+#generate the random shuffle seed
+SHUFFLE_SEED = random.randint(3, 9)
+
+# Percentage of samples to use for validation
+VALID_SPLIT = 0.5
+
 
 
 #input image dimensions TODO: tweak
@@ -34,7 +44,6 @@ x_train = False #x_train.reshape(numimages, img_rows, img_cols, channels)
 y_train = False #y_train.reshape(numimages, img_rows, img_cols, channels)
 #note to self: the image size, channels of both should agree with each other
 #y channels are labels
-#todo: randomly allocate audio some to x_train, some to x_test. setup y labels
 
 #splice my data it into 45 segements
 #then, use numpy to shuffle it.
@@ -72,6 +81,29 @@ rng = np.random.RandomState(SHUFFLE_SEED)
 rng.shuffle(audio_paths)
 rng = np.random.RandomState(SHUFFLE_SEED)
 rng.shuffle(labels)
+
+
+
+
+
+# Split into training and validation
+num_val_samples = int(VALID_SPLIT * len(audio_paths))
+print("Using {} files for training.".format(len(audio_paths) - num_val_samples))
+train_audio_paths = audio_paths[:-num_val_samples]
+train_labels = labels[:-num_val_samples]
+
+print("Using {} files for validation.".format(num_val_samples))
+valid_audio_paths = audio_paths[-num_val_samples:]
+valid_labels = labels[-num_val_samples:]
+
+# Create 2 datasets, one for training and the other for validation
+train_ds = util.paths_and_labels_to_dataset(train_audio_paths, train_labels)
+train_ds = train_ds.shuffle(buffer_size=BATCH_SIZE * 8, seed=SHUFFLE_SEED).batch(
+    BATCH_SIZE
+)
+
+valid_ds = util.paths_and_labels_to_dataset(valid_audio_paths, valid_labels)
+valid_ds = valid_ds.shuffle(buffer_size=32 * 8, seed=SHUFFLE_SEED).batch(32)
 
 
 

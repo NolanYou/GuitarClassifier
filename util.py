@@ -29,6 +29,7 @@ def load_noise_sample(path, SAMPLING_RATE):
         print("Sampling rate for {} is incorrect. Ignoring it".format(path))
         return None
 
+#TODO: fix this
 def paths_and_labels_to_dataset(audio_paths, labels):
     """Constructs a dataset of audios and labels."""
     path_ds = tf.data.Dataset.from_tensor_slices(audio_paths)
