@@ -1,5 +1,7 @@
 import tensorflow as tf
 import numpy as np
+
+#TODO: make function to cut wav file into one second long files
 def padding(array, xx, yy):
     """
     :param array: numpy array
@@ -56,3 +58,21 @@ def audio_to_fft(audio):
     # Return the absolute value of the first half of the FFT
     # which represents the positive frequencies
     return tf.math.abs(fft[:, : (audio.shape[1] // 2), :])
+
+def add_noise(audio, noises=None, scale=0.5):
+    if noises is not None:
+        # Create a random tensor of the same size as audio ranging from
+        # 0 to the number of noise stream samples that we have.
+        tf_rnd = tf.random.uniform(
+            (tf.shape(audio)[0],), 0, noises.shape[0], dtype=tf.int32
+        )
+        noise = tf.gather(noises, tf_rnd, axis=0)
+
+        # Get the amplitude proportion between the audio and the noise
+        prop = tf.math.reduce_max(audio, axis=1) / tf.math.reduce_max(noise, axis=1)
+        prop = tf.repeat(tf.expand_dims(prop, axis=1), tf.shape(audio)[1], axis=1)
+
+        # Adding the rescaled noise to audio
+        audio = audio + noise * prop * scale
+
+    return audio

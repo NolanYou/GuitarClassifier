@@ -13,6 +13,7 @@ import numpy as np
 import matplotlib as plt
 
 import util
+from keras_model import keras_guitar_model
 
 BATCH_SIZE = 128
 num_classes = 3
@@ -73,6 +74,7 @@ for label, name in enumerate(class_names):
     audio_paths += speaker_sample_paths
     labels += [label] * len(speaker_sample_paths)
 
+
 print(
     "Found {} files belonging to {} classes.".format(len(audio_paths), len(class_names))
 )
@@ -105,74 +107,15 @@ train_ds = train_ds.shuffle(buffer_size=BATCH_SIZE * 8, seed=SHUFFLE_SEED).batch
 valid_ds = util.paths_and_labels_to_dataset(valid_audio_paths, valid_labels)
 valid_ds = valid_ds.shuffle(buffer_size=32 * 8, seed=SHUFFLE_SEED).batch(32)
 
+#This takes the audio snippet, ffts it to make it useable
+train_ds = train_ds.map(
+    lambda x, y: (util.audio_to_fft(x), y), num_parallel_calls=tf.data.AUTOTUNE
+)
+train_ds = train_ds.prefetch(tf.data.AUTOTUNE)
+valid_ds = valid_ds.map(
+    lambda x, y: (util.audio_to_fft(x), y), num_parallel_calls=tf.data.AUTOTUNE
+)
+valid_ds = valid_ds.prefetch(tf.data.AUTOTUNE)
 
 
-
-
-
-
-
-
-
-
-
-
-if keras.backend.image_data_format() == 'channels_first': # code for flattening the images into 28x28x1 (black and white) instead of 28x28x3 (rgb full color images)
-    x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
-    x_test = x_test.reshape(x_test.shape[0], 1, img_rows, img_cols)
-    input_shape = (1, img_rows, img_cols)
-else:
-    x_train = x_train.reshape(x_train.shape[0], img_rows, img_cols, 1)
-    x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
-input_shape = (img_rows, img_cols, 1)
-
-
-model = Sequential()
-model.add(Conv2D(32, kernel_size=(3, 3),
-                 activation='relu',
-                 input_shape=(img_rows,img_cols,1)))
-#note: changed from relu to tanh
-model.add(Conv2D(64, (3, 3), activation='tanh'))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.25))
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))
-model.add(Dropout(0.5))
-model.add(Dense(num_classes, activation='softmax'))
-
-#what is my model
-model.summary()
-#This is the loss function below, this is what changes the entire shebang
-model.compile(loss=keras.losses.categorical_crossentropy,
-              optimizer=tf.optimizers.Adam(),
-metrics=['accuracy'])
-
-#this is where we train the data. Will need to update ytrain.
-history = model.fit(x_train, y_train,
-          batch_size=batch_size,
-          epochs=epochs,
-          verbose=1,
-validation_data=(x_test, y_test))
-
-print(history.history.keys())
-# summarize history for accuracy
-plt.plot(history.history['accuracy'])
-plt.plot(history.history['val_accuracy'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-
-# summarize history for loss
-plt.plot(history.history['loss'])
-plt.plot(history.history['val_loss'])
-plt.title('model loss')
-plt.ylabel('loss')
-plt.xlabel('step')
-plt.legend(['train', 'test'], loc='upper left')
-plt.show()
-
-score = model.evaluate(x_test, y_test, verbose=1)
-print('Test loss:', score[0])
-print('Test accuracy:', score[1])
+model = keras_guitar_model(class_names,train_ds,valid_ds)
